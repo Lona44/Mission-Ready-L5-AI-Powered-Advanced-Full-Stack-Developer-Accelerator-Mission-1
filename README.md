@@ -155,5 +155,4 @@ MIT License
 
 ## Author
 
-Mission Ready Level 5 - Full Stack Developer Accelerator
-Mission 1: AI-Powered Vehicle Classification System
+Ma'alona Mafaufau
