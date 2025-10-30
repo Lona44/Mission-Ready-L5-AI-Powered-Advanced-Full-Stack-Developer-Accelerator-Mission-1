@@ -1,0 +1,29 @@
+{
+  "class_to_idx": {
+    "Convertible": 0,
+    "Coupe": 1,
+    "Hatchback": 2,
+    "Pick-Up": 3,
+    "SUV": 4,
+    "Sedan": 5,
+    "VAN": 6
+  },
+  "idx_to_class": {
+    "0": "Convertible",
+    "1": "Coupe",
+    "2": "Hatchback",
+    "3": "Pick-Up",
+    "4": "SUV",
+    "5": "Sedan",
+    "6": "VAN"
+  },
+  "class_names": [
+    "Convertible",
+    "Coupe",
+    "Hatchback",
+    "Pick-Up",
+    "Sedan",
+    "SUV",
+    "VAN"
+  ]
+}

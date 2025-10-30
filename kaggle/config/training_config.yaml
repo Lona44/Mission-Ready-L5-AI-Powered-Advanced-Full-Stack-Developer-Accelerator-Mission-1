@@ -1,0 +1,55 @@
+# Training Configuration
+
+# Model
+model:
+  architecture: "efficientnet_v2_m"  # Options: efficientnet_v2_m, convnext_base, swin_base_patch4_window7_224
+  pretrained: true
+  num_classes: 3  # Sedan, SUV, Truck (or 7 for all classes)
+
+# Data
+data:
+  dataset_path: "data/raw/cars-body-type-cropped"
+  image_size: 224
+  batch_size: 32
+  num_workers: 4
+  train_split: 0.7
+  val_split: 0.15
+  test_split: 0.15
+  classes:
+    - "Sedan"
+    - "SUV"
+    - "Pick-Up"
+    # Optionally add more:
+    # - "Convertible"
+    # - "Coupe"
+    # - "Hatchback"
+    # - "VAN"
+
+# Training
+training:
+  epochs: 50
+  learning_rate: 0.001
+  optimizer: "adamw"
+  weight_decay: 0.01
+  lr_scheduler: "cosine"
+  early_stopping_patience: 10
+  gradient_clip: 1.0
+
+# Augmentation
+augmentation:
+  horizontal_flip: 0.5
+  rotation: 15
+  brightness: 0.2
+  contrast: 0.2
+  saturation: 0.2
+
+# Validation
+validation:
+  metric: "accuracy"
+  target_accuracy: 0.95
+
+# Checkpointing
+checkpointing:
+  save_best: true
+  save_last: true
+  monitor: "val_accuracy"

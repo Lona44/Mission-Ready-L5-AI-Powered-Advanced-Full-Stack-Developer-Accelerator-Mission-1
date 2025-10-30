@@ -1,0 +1,92 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Jupyter Notebook
+.ipynb_checkpoints
+*.ipynb_checkpoints/
+
+# Data - exclude raw datasets (too large for GitHub)
+data/raw/*
+!data/raw/.gitkeep
+data/processed/*
+!data/processed/.gitkeep
+
+# Test images - keep small ones, exclude large ones
+test_images/*.png
+test_images/*.jpg
+test_images/*.jpeg
+!test_images/README.md
+
+# Models (large files - exclude from git)
+models/checkpoints/*
+!models/checkpoints/.gitkeep
+models/final/*.pth
+models/final/*.onnx
+models/final/*.tar.gz
+*.h5
+*.pb
+
+# Keep model metadata (small JSON files)
+!models/final/class_labels_*.json
+
+# Cloud credentials & configs
+azure_config.yaml
+.azure/
+.gcloud/
+gcp-key.json
+
+# Kaggle API credentials
+.kaggle/
+kaggle.json
+
+# VS Code
+.vscode/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Frontend (React/Vite)
+frontend/node_modules/
+frontend/dist/
+frontend/.env
+frontend/.env.local
+frontend/.env.production.local
+frontend/.env.development.local
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment variables
+.env
+.env.local
+
+# Claude Code
+.claude/
