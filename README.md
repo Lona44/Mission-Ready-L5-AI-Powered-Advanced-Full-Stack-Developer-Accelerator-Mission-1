@@ -1,100 +1,129 @@
-# Car Vision Classification Project
+# Vehicle Classification System - Turners Insurance
 
-AI-powered vehicle type classification system using state-of-the-art deep learning models, deployed on Azure.
+End-to-end ML system for automated vehicle classification from images, built for Turners Car Auctions' insurance division.
 
 ## Overview
 
-This project builds an end-to-end vehicle classification system that can accurately categorize cars into types (Sedan, SUV, Truck, etc.). The system uses modern computer vision models trained on Kaggle and deployed on Microsoft Azure.
+AI-powered dual-model classification system that identifies vehicle body types and brands from photos to streamline insurance quote processing for Turners Insurance customers.
 
-## Project Goals
+## System Architecture
 
-- Achieve 95%+ accuracy on vehicle classification
-- Train using state-of-the-art models (EfficientNet V2 / ConvNeXt V2)
-- Deploy as production-ready Azure ML endpoint
-- Create professional web application for demonstrations
-- Build comprehensive portfolio piece
+**Training Platform**: Kaggle (free GPU)
+**Backend API**: Google Cloud Platform (Cloud Run)
+**Frontend**: Azure Static Web Apps
+**Model Format**: PyTorch (.pth) + ONNX
+
+### Hybrid Cloud Deployment
+- **Backend**: GCP Cloud Run (serverless FastAPI)
+- **Frontend**: Azure Static Web Apps (React + TailwindCSS)
+
+## Model Performance
+
+### Body Type Classification
+- **Classes**: 7 (Sedan, SUV, Pick-Up, Convertible, Coupe, Hatchback, VAN)
+- **Accuracy**: 97.6% on test set
+- **Architecture**: EfficientNetV2-Medium (ImageNet-21k pretrained)
+- **Dataset**: 7,549 images
+
+### Brand Classification
+- **Classes**: 33 brands (Ram, Ford, BMW, Toyota, etc.)
+- **Accuracy**: 75.2% on test set
+- **Architecture**: EfficientNetV2-Medium (ImageNet-21k pretrained)
+- **Dataset**: 16,467 images
 
 ## Technology Stack
 
 ### Training
-- **Platform**: Kaggle (free GPU access)
-- **Framework**: PyTorch with timm library
-- **Models**: EfficientNet V2, ConvNeXt V2, or Swin Transformer V2
-- **Dataset**: Car Body Types Images Dataset (7,000 images)
+- **Platform**: Kaggle Notebooks (Tesla P100 GPU)
+- **Framework**: PyTorch 2.x + TIMM
+- **Model**: `tf_efficientnetv2_m.in21k_ft_in1k`
+- **Training Time**: ~2.5 hours per model
 
-### Deployment
-- **Cloud**: Microsoft Azure Machine Learning
-- **Model Format**: ONNX
-- **API**: REST endpoint
+### Backend API
+- **Framework**: FastAPI
+- **Runtime**: PyTorch (ONNX not compatible with Cloud Run)
+- **Deployment**: GCP Cloud Run (serverless)
+- **Features**: CORS-enabled, auto-scaling 0-3 instances
 
-### Web Application
-- **Frontend**: React + Vite
-- **Styling**: TailwindCSS (or your choice)
-- **API Integration**: Azure ML REST API
+### Frontend
+- **Framework**: React 18 + Vite
+- **Styling**: TailwindCSS
+- **API Client**: Axios
+- **Deployment**: Azure Static Web Apps
 
 ## Project Structure
 
 ```
 Mission_01/
-├── data/              # Dataset storage
-├── notebooks/         # Jupyter notebooks for training
-├── models/            # Trained model artifacts
-├── src/               # Python source code
-├── azure/             # Azure deployment scripts
-├── webapp/            # React web application
-├── docs/              # Documentation
-└── config/            # Configuration files
+├── kaggle/                  # Training notebooks and configs
+│   ├── notebooks/           # Jupyter notebooks for Kaggle
+│   └── config/             # Training hyperparameters
+├── backend/                # GCP Cloud Run API
+│   ├── main.py            # FastAPI application
+│   ├── Dockerfile         # Container definition
+│   └── deploy.sh          # Deployment script
+├── frontend/              # React web application
+│   ├── src/               # React components
+│   └── dist/              # Production build
+├── models/
+│   ├── final/             # Class label mappings (JSON)
+│   └── metrics/           # Training visualizations
+└── data/                  # Datasets (gitignored)
 ```
 
-## Getting Started
+## Quick Start
 
 ### Prerequisites
-- Python 3.9+
-- Kaggle account and API credentials
-- Azure account with free credits
-- Node.js 18+ (for React app)
+- Python 3.11+
+- Node.js 18+
+- Kaggle account
+- Google Cloud account
+- Azure account
 
-### Setup
+### Run Frontend Locally
 
-1. **Install Python dependencies**
-   ```bash
-   pip install -r requirements.txt
-   ```
+```bash
+cd frontend
+npm install
+npm run dev
+```
 
-2. **Configure Kaggle API**
-   - Place `kaggle.json` in `~/.kaggle/`
-   - Set permissions: `chmod 600 ~/.kaggle/kaggle.json`
+Visit http://localhost:5173
 
-3. **Download dataset**
-   ```bash
-   kaggle datasets download -d ademboukhris/cars-body-type-cropped
-   ```
+### Deploy Backend to GCP
 
-## Workflow
+```bash
+cd backend
+./deploy.sh
+```
 
-1. **Data Preparation** → Explore and preprocess dataset
-2. **Model Training** → Train on Kaggle with free GPU
-3. **Model Export** → Convert to ONNX format
-4. **Azure Deployment** → Deploy as ML endpoint
-5. **Web App** → Build React interface
-6. **Testing** → End-to-end validation
+Requires Google Cloud SDK and authentication.
 
-## Current Status
+## Live Demo
 
-🚧 Project in development
+**Backend API**: https://car-classifier-tilhbeahgq-uc.a.run.app
+**Frontend**: [Azure Static Web Apps URL after deployment]
 
-- [ ] Data downloaded and explored
-- [ ] Model training notebook created
-- [ ] Model trained (target: 95%+ accuracy)
-- [ ] Model exported to ONNX
-- [ ] Azure endpoint deployed
-- [ ] React web app built
-- [ ] End-to-end testing complete
+### API Endpoints
+
+- `GET /health` - Health check
+- `POST /predict/body-type` - Classify vehicle type
+- `POST /predict/brand` - Classify vehicle brand
+
+## Training
+
+Models trained on Kaggle using free GPU allocation. See `kaggle/README.md` for detailed instructions.
+
+## Deployment
+
+- **Backend**: Deployed to GCP Cloud Run via `backend/deploy.sh`
+- **Frontend**: Automatically deployed via GitHub Actions to Azure Static Web Apps
 
 ## License
 
-MIT License - See LICENSE file for details
+MIT License
 
 ## Author
 
-Mission Ready L5 - Advanced AI Project
+Mission Ready Level 5 - Full Stack Developer Accelerator
+Mission 1: AI-Powered Vehicle Classification System
