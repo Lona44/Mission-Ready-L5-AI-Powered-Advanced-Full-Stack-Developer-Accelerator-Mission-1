@@ -27,9 +27,31 @@ AI-powered dual-model classification system that identifies vehicle body types a
 
 ### Brand Classification
 - **Classes**: 33 brands (Ram, Ford, BMW, Toyota, etc.)
-- **Accuracy**: 75.2% on test set
+- **Accuracy**: 75.2% on test set (76.9% validation)
 - **Architecture**: EfficientNetV2-Medium (ImageNet-21k pretrained)
 - **Dataset**: 16,467 images
+
+## Why EfficientNetV2?
+
+**EfficientNetV2** (Tan & Le, 2021) represents a breakthrough in efficient computer vision, developed by Google Research Brain Team and published at ICML 2021.
+
+### State-of-the-Art Performance
+- Achieves **87.3% top-1 accuracy** on ImageNet when pretrained on ImageNet-21k
+- Trains **5-11x faster** than Vision Transformers while being **6.8x smaller**
+- Outperforms previous state-of-the-art CNNs on ImageNet, CIFAR, Cars, and Flowers datasets
+
+### Key Innovations
+- **Training-Aware NAS**: Jointly optimizes accuracy, model size, and training speed
+- **Fused-MBConv**: Accelerator-friendly operations for faster inference
+- **Progressive Learning**: Adaptive regularization during training for optimal accuracy
+
+### Why It's Ideal for This Project
+- **Efficiency**: Fast training on free Kaggle GPUs (~2.5 hours per model)
+- **Accuracy**: High performance on fine-grained classification tasks
+- **Deployment**: Compact model size enables serverless deployment on Cloud Run
+- **Transfer Learning**: Excellent ImageNet-21k pretraining for vehicle features
+
+**Reference**: Tan, M., & Le, Q. V. (2021). EfficientNetV2: Smaller Models and Faster Training. ICML 2021.
 
 ## Technology Stack
 
@@ -38,6 +60,9 @@ AI-powered dual-model classification system that identifies vehicle body types a
 - **Framework**: PyTorch 2.x + TIMM
 - **Model**: `tf_efficientnetv2_m.in21k_ft_in1k`
 - **Training Time**: ~2.5 hours per model
+- **Notebooks**:
+  - [Body Type Classification with Grad-CAM](https://www.kaggle.com/code/maalona/body-type-classification-with-gradcam)
+  - [Brand Classification with Grad-CAM](https://www.kaggle.com/code/maalona/car-brand-classification-with-gradcam)
 
 ### Backend API
 - **Framework**: FastAPI
@@ -112,7 +137,12 @@ Requires Google Cloud SDK and authentication.
 
 ## Training
 
-Models trained on Kaggle using free GPU allocation. See `kaggle/README.md` for detailed instructions.
+Models trained on Kaggle using free GPU allocation (Tesla P100). Training notebooks available on Kaggle:
+
+- [Body Type Classification with Grad-CAM](https://www.kaggle.com/code/maalona/body-type-classification-with-gradcam) - 97.6% test accuracy
+- [Brand Classification with Grad-CAM](https://www.kaggle.com/code/maalona/car-brand-classification-with-gradcam) - 75.2% test accuracy
+
+See `kaggle/README.md` for detailed instructions on running these notebooks.
 
 ## Deployment
 
