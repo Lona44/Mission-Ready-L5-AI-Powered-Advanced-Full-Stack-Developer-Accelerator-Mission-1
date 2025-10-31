@@ -126,8 +126,8 @@ Requires Google Cloud SDK and authentication.
 
 ## Live Demo
 
+**Frontend**: https://brave-dune-0f673fc10.3.azurestaticapps.net
 **Backend API**: https://car-classifier-tilhbeahgq-uc.a.run.app
-**Frontend**: [Azure Static Web Apps URL after deployment]
 
 ### API Endpoints
 

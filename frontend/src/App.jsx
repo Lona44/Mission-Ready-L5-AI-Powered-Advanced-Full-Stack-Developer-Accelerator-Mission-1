@@ -10,19 +10,44 @@ function App() {
   const [loading, setLoading] = useState(false)
   const [results, setResults] = useState(null)
   const [error, setError] = useState(null)
+  const [dragActive, setDragActive] = useState(false)
 
   const handleImageSelect = (e) => {
     const file = e.target.files?.[0]
     if (file) {
-      setSelectedImage(file)
-      setError(null)
-      setResults(null)
+      processFile(file)
+    }
+  }
 
-      const reader = new FileReader()
-      reader.onloadend = () => {
-        setImagePreview(reader.result)
-      }
-      reader.readAsDataURL(file)
+  const processFile = (file) => {
+    setSelectedImage(file)
+    setError(null)
+    setResults(null)
+
+    const reader = new FileReader()
+    reader.onloadend = () => {
+      setImagePreview(reader.result)
+    }
+    reader.readAsDataURL(file)
+  }
+
+  const handleDrag = (e) => {
+    e.preventDefault()
+    e.stopPropagation()
+    if (e.type === "dragenter" || e.type === "dragover") {
+      setDragActive(true)
+    } else if (e.type === "dragleave") {
+      setDragActive(false)
+    }
+  }
+
+  const handleDrop = (e) => {
+    e.preventDefault()
+    e.stopPropagation()
+    setDragActive(false)
+
+    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+      processFile(e.dataTransfer.files[0])
     }
   }
 
@@ -97,7 +122,17 @@ function App() {
                 Upload Vehicle Photo
               </label>
               <div className="flex items-center justify-center w-full">
-                <label className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 transition">
+                <label
+                  className={`flex flex-col items-center justify-center w-full h-64 border-2 border-dashed rounded-lg cursor-pointer transition ${
+                    dragActive
+                      ? 'border-blue-500 bg-blue-50'
+                      : 'border-gray-300 bg-gray-50 hover:bg-gray-100'
+                  }`}
+                  onDragEnter={handleDrag}
+                  onDragLeave={handleDrag}
+                  onDragOver={handleDrag}
+                  onDrop={handleDrop}
+                >
                   <div className="flex flex-col items-center justify-center pt-5 pb-6">
                     {imagePreview ? (
                       <img
